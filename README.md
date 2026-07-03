@@ -25,6 +25,15 @@ The board was successfully programmed with a mock logic to test wheter the inter
 |   GND |	    17 |	18 |	Unknown |
 |   Unknown |	19 |	20 |	NC |
 
+The response from the board after connecting it to JTAG probe and using Openocd was correct and was in line with what chip is present on this board as per the [UltraScale Architecture Configuration User Guide (UG570)](https://docs.amd.com/api/khub/maps/ioE1QkNEnAQuonKQY6T3pg/attachments/oSt8I_xWTUZb2SISl9jrPw-ioE1QkNEnAQuonKQY6T3pg/content?download=true&locationValue=reader). 
+
+```
+Info : usb blaster interface using libftdi
+Info : This adapter doesn't support configurable speed
+Info : JTAG tap: XCVU7P.tap tap/device found: 0x14b29093 (mfg: 0x049 (Xilinx), part: 0x4b29, ver: 0x1)
+```
+![](/images/programming/ug570_configuration_table.png)
+
 ## Next steps
 
 The board is a complete unknown apart from the ability to reprogram it. There are multiple element that are needed to be decipherered:
