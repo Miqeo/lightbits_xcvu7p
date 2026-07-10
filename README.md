@@ -4,7 +4,7 @@
 
 ## Preface
 
-This effort is concentrated on reverse engineering of the Lightbits LBASSY0021 Xilinx Virtex Ultrascale+ XCVU7P fpga in form of the PCIe x16 low profile board. 
+This effort is concentrated on reverse engineering of the Lightbits LBASSY0021 Xilinx Virtex Ultrascale+ XCVU7P FLVB2104AAZ fpga in form of the PCIe x16 low profile board. 
 
 ## Programming
 
@@ -27,6 +27,7 @@ The board was successfully programmed with a mock logic to test wheter the inter
 
 
 ![](/images/overall/IMG_3410.JPG)
+*Programming header o the board*
 
 The response from the board after connecting it to JTAG probe and using Openocd was correct and was in line with what chip is present on this board as per the [UltraScale Architecture Configuration User Guide (UG570)](https://docs.amd.com/api/khub/maps/ioE1QkNEnAQuonKQY6T3pg/attachments/oSt8I_xWTUZb2SISl9jrPw-ioE1QkNEnAQuonKQY6T3pg/content?download=true&locationValue=reader). 
 
@@ -36,17 +37,30 @@ Info : This adapter doesn't support configurable speed
 Info : JTAG tap: XCVU7P.tap tap/device found: 0x14b29093 (mfg: 0x049 (Xilinx), part: 0x4b29, ver: 0x1)
 ```
 ![](/images/programming/ug570_configuration_table.png)
+*JTAG and IDCODE table of contents*
 
-## Next steps
+## The next steps
 
 The board is a complete unknown apart from the ability to reprogram it. There are multiple element that are needed to be decipherered:
 
-- Pinout of the LEDs
+- Pinout of the status LEDs
 - Clock source
 - DDR pinout
 - PCIe pinout
 
 The status of the progress will be posted in the future in this section.
+
+## The clock source
+
+To test the clock source and getting to know its frequency, a test pad to output the certain pulse out of the chip. On this board an unpopulated clock footprint will be used with an exposed pin **AL27** with the name of IO_L24P_T3U_N10_EMCCLK_65. 
+
+![](/images/overall/IMG_3415.JPG)
+*Selected test point (red arrow) as a part of the unused crystal footprint, the tested clock visible in the upper corner*
+
+The pin is of a general I/O type and thus I could output from it and use it to verify that the clock source is working. The correct differential pair is pins **AY30**, **BA30** (positive, negative). The final pulse is confirmed to be 100 MHz based on the basic clock counter of 1 Hz.
+
+![](/images/programming/probe_clock.png)
+*An excerpt from the logic analysis software showing a correct 1 Hz square wave*
 
 ## Components onboard
 
@@ -54,10 +68,10 @@ The board itself features multiple packages that play a role in power management
 
 | Integrated circuit marking | Image | Part number | Descritpion |
 |-|-|-|-|
-| 1000000 DCP1838 05U9 | ![](/images/ics/DCP1838.jpg) | | Probably Abracon ASEMP series 100 MHz differential clock |
+| 1000000 DCP1838 05U9 | ![](/images/ics/DCP1838.jpg) | | Probably Abracon ASEMP series 100 MHz differential MEMS clock oscillator |
+| 32Y 849W S102I | ![](/images/ics/32Y849W.jpg) | 8P34S1102 | 1:2 LVDS 1.8V/2.5V Fanout Buffer for 1PPS and High-Speed Clocks |
 | 1TIR 91J | ![](/images/ics/1TIR.JPG) | | Unknown |
 | 7BDS | ![](/images/ics/7DBS.JPG) | | Unknown |
-| 32Y 849W S102I | ![](/images/ics/32Y849W.jpg) | | Unknown |
 | 0505 XBPX | ![](/images/ics/0505XBPX.JPG) | | Unknown |
 | 7418 GA9D12 | ![](/images/ics/7418.JPG) | AON7418 | MOSFET N-CH 30V 46A/50A |
 | 1206 89K D8TG | ![](/images/ics/120689K.JPG) | | Unknown |
@@ -72,4 +86,4 @@ The board itself features multiple packages that play a role in power management
 
 ## Questions?
 
-Reach out to me if you have any questions regarding this work or if you have some information usefull in deciphering this hardware. The best way will be opening an issue on this repo.
+Reach out to me if you have any questions regarding this work or if you have some information useful in deciphering this hardware. The best way will be opening an issue on this repo.
