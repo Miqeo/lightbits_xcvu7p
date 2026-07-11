@@ -4,13 +4,13 @@
 
 ## Preface
 
-This effort is concentrated on reverse engineering of the Lightbits LBASSY0021 Xilinx Virtex Ultrascale+ XCVU7P FLVB2104AAZ fpga in form of the PCIe x16 low profile board. 
+This effort is concentrated on reverse engineering of the Lightbits LBASSY0021 Xilinx Virtex Ultrascale+ XCVU7P FLVB2104AAZ fpga in form of the PCIe x16 low profile board.
 
 ## Programming
 
 The initial assessment of the programming interface was done and yelded the below table. The pinout is similar in nature to the 14-pin interface used in the Xilinx programmators. 
 
-The board was successfully programmed with a mock logic to test wheter the interface if fully functional as well as the board is not locked in sone way that would halt the program. 
+The board was successfully programmed with a mock logic to test wheter the interface if fully functional as well as the board is not locked in some way that would halt ist further use. 
 
 | Role | Pin number (latch side) | Pin number | Role |
 |-|-|-|-|
@@ -25,9 +25,9 @@ The board was successfully programmed with a mock logic to test wheter the inter
 |   GND |	    17 |	18 |	Unknown |
 |   Unknown |	19 |	20 |	NC |
 
-
 ![](/images/overall/IMG_3410.JPG)
-*Programming header o the board*
+
+*Board programming header*
 
 The response from the board after connecting it to JTAG probe and using Openocd was correct and was in line with what chip is present on this board as per the [UltraScale Architecture Configuration User Guide (UG570)](https://docs.amd.com/api/khub/maps/ioE1QkNEnAQuonKQY6T3pg/attachments/oSt8I_xWTUZb2SISl9jrPw-ioE1QkNEnAQuonKQY6T3pg/content?download=true&locationValue=reader). 
 
@@ -37,30 +37,22 @@ Info : This adapter doesn't support configurable speed
 Info : JTAG tap: XCVU7P.tap tap/device found: 0x14b29093 (mfg: 0x049 (Xilinx), part: 0x4b29, ver: 0x1)
 ```
 ![](/images/programming/ug570_configuration_table.png)
+
 *JTAG and IDCODE table of contents*
-
-## The next steps
-
-The board is a complete unknown apart from the ability to reprogram it. There are multiple element that are needed to be decipherered:
-
-- Pinout of the status LEDs
-- Clock source
-- DDR pinout
-- PCIe pinout
-
-The status of the progress will be posted in the future in this section.
 
 ## The clock source
 
-To test the clock source and getting to know its frequency, a test pad to output the certain pulse out of the chip. On this board an unpopulated clock footprint will be used with an exposed pin **AL27** with the name of IO_L24P_T3U_N10_EMCCLK_65. 
+To test the clock source and to get to know its frequency, a test pad was selected to output a certain frequency. On this board an unpopulated clock footprint was used, it included an exposed pin **AL27** with the name of IO_L24P_T3U_N10_EMCCLK_65. This pin was highlighted with its associated path.
 
 ![](/images/overall/IMG_3415.JPG)
-*Selected test point (red arrow) as a part of the unused crystal footprint, the tested clock visible in the upper corner*
 
-The pin is of a general I/O type and thus I could output from it and use it to verify that the clock source is working. The correct differential pair is pins **AY30**, **BA30** (positive, negative). The final pulse is confirmed to be 100 MHz based on the basic clock counter of 1 Hz.
+*Selected test point (red arrow) as a part of the unused crystal circuit, tested clock is visible in the upper-left corner*
+
+The pin was a typeo of general I/O and thus it could be used to verify that the clock source was working. The correct differential pair is made out of pins **AY30**, **BA30** (positive, negative). The final pulse is confirmed to be 100 MHz based on the output of the logic creating a basic clock counter of 1 Hz.
 
 ![](/images/programming/probe_clock.png)
-*An excerpt from the logic analysis software showing a correct 1 Hz square wave*
+
+*An excerpt from the logic analysis software showing a correct 1 Hz output*
 
 ## Components onboard
 
@@ -86,4 +78,4 @@ The board itself features multiple packages that play a role in power management
 
 ## Questions?
 
-Reach out to me if you have any questions regarding this work or if you have some information useful in deciphering this hardware. The best way will be opening an issue on this repo.
+Reach out to me if you have any questions regarding this work or if you have some information helpfull in reverse engineering of this hardware. 
