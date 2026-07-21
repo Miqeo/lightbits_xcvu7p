@@ -20,10 +20,10 @@ The board was successfully programmed with a mock logic to test wheter the inter
 |   GND |	    7 |	    8 |     TDO |
 |   GND |       9 |	    10 |    TDI |
 |   GND |	    11 |    12 |    NC |
-|   GND |	    13 |    14 |	Unknown |
-|   GND |	    15 |	16 |	Unknown |
-|   GND |	    17 |	18 |	Unknown |
-|   Unknown |	19 |	20 |	NC |
+|   GND |	    13 |    14 |	UNKNOWN |
+|   GND |	    15 |	16 |	UNKNOWN |
+|   UNKNOWN |	    17 |	18 |	UNKNOWN |
+|   NC |	19 |	20 |	NC |
 
 ![](/images/overall/IMG_3410.JPG)
 
